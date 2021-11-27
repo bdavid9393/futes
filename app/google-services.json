@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "509166852337",
+    "firebase_url": "https://futes-7ba31-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "futes-7ba31",
+    "storage_bucket": "futes-7ba31.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:509166852337:android:4d04ffa5703610cfabb150",
+        "android_client_info": {
+          "package_name": "com.example.futes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "509166852337-ilst5nosu81v584ler25ou3ssusuf62c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGlg_WJceJ0HnbvsN5Uv7UPoKE7HN5dwQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "509166852337-ilst5nosu81v584ler25ou3ssusuf62c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
