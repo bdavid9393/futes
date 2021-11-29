@@ -35,8 +35,18 @@
             android:layout_height="wrap_content"
             android:text="Küldés"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_send"
             app:layout_constraintStart_toEndOf="@id/btn_delete_all" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:id="@+id/cb_auto_send"
+            android:text="Auto küldés"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_send" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

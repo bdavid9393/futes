@@ -35,7 +35,7 @@ class SPrefUtil {
                 return getPhoneId(context)
             }
 //            return num
-            return  2223
+            return  1111
         }
 
         fun isDataCollector(): Boolean {

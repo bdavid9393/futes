@@ -34,6 +34,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import androidx.core.content.FileProvider
 import com.example.futes.data.HeatLogDao
+import com.example.futes.data.HeatLogRD
 import com.github.tntkhang.gmailsenderlibrary.GmailListener
 
 import com.github.tntkhang.gmailsenderlibrary.GMailSender
@@ -47,7 +48,6 @@ class MainActivity : AppCompatActivity() {
     lateinit var heatingDao: HeatLogDao
 
     var handler = Handler(Looper.getMainLooper())
-    var runnable: Runnable? = null
 
     var isSent = false
 
@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.btnSend.setOnClickListener {
-//            sendFile(heatingDao.getAll())
+            sendFile(heatingDao.getAll())
             // Write a message to the database
         }
 
@@ -96,25 +96,29 @@ class MainActivity : AppCompatActivity() {
         startService(intent)
 
 
-//        val runnable: Runnable = object : Runnable {
-//            override fun run() {
-//                // need to do tasks on the UI thread
-//                val hour = Calendar.getInstance()[Calendar.HOUR_OF_DAY]
-//                Log.wtf("TAAAAAAAAG", hour.toString())
-//                if (hour == 6) {
-//                    if (!isSent) {
-//                        autoSenEmail()
-//                        isSent = true
-//                    }
-//                } else {
-//                    isSent = false
-//                }
-//
-//                handler.postDelayed(this, 1000 * 60 * 15)
-//            }
-//        }
+        val runnable: Runnable = object : Runnable {
+            override fun run() {
+                // need to do tasks on the UI thread
+                val hour = Calendar.getInstance()[Calendar.HOUR_OF_DAY]
+                Log.wtf("TAAAAAAAAG", hour.toString())
+                if (binding.cbAutoSend.isChecked) {
+                    if (hour == 6) {
+                        if (!isSent) {
+                            autoSenEmail()
+                            isSent = true
+                        }
+                    } else {
+                        isSent = false
+                    }
+                }
+                handler.postDelayed(this, 1000 * 60 * 15)
+            }
+        }
 
-//        handler.postAtTime(runnable, 2000)
+        handler.postAtTime(runnable, 2000)
+
+
+        importData()
 
     }
 
@@ -203,6 +207,37 @@ class MainActivity : AppCompatActivity() {
         } catch (e: Exception) {
             return e.toString()
         }
+    }
+
+
+    private fun importData() {
+        val database =
+            Firebase.database.reference
+        var phoneId = SPrefUtil.getPhoneId(this).toString()
+
+        database.child(phoneId).get().addOnCompleteListener({
+            if (it.getResult()?.childrenCount!! > 0) {
+                Log.wtf("dbma", "létezik")
+            } else {
+                Log.wtf("dbma", "nem létezik")
+                var data = getDataString(heatingDao.getAll())
+                val formatter = SimpleDateFormat("yyyy.MM.dd HH:mm:ss", Locale.getDefault())
+                data!!.split('\n').forEach({
+                    it.split(';').let {
+                        var dto = HeatLogRD(
+                            formatter.parse(it.get(0)).time / 1000,
+                            it.get(1).trim().equals("Kikapcsolt")
+                        )
+                        Log.wtf("input", dto.toString())
+
+                        var newPostKey = database.child(phoneId).push().key
+                        database.child(phoneId).child(newPostKey!!).setValue(dto)
+                    }
+                })
+            }
+        })
+
+
     }
 
 }
