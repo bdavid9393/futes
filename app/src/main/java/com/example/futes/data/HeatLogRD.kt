@@ -9,7 +9,7 @@ data class HeatLogRD(
     val offEvent: Boolean? = false
 ) {
 
-    val getMiutesOfDay: Float
+    val getHourOfDay: Float
         get() {
             var cal = Calendar.getInstance()
             cal.time = Date(timestamp!! * 1000)
