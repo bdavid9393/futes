@@ -185,7 +185,7 @@ class MainActivity : AppCompatActivity() {
             .withTitle("Futes")
             .withBody(getDataString(heatingDao.getAll()))
             .withSender("Futes")
-            .toEmailAddress("dymer8@gmail.com") // one or multiple addresses separated by a comma
+            .toEmailAddress("ifj.bolgargyorgy@gmail.com") // one or multiple addresses separated by a comma
             .withListenner(object : GmailListener {
                 override fun sendSuccess() {
                     Toast.makeText(this@MainActivity, "Success", Toast.LENGTH_SHORT).show()
